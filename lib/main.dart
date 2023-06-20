@@ -1,20 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-import 'src/app.dart';
-import 'src/controllers/settings_controller.dart';
-import 'src/services/settings_service.dart';
+import 'package:five_a_side_app/screens/home_page.dart';
 
-void main() async {
-  // Set up the SettingsController, which will glue user settings to multiple
-  // Flutter Widgets.
-  final settingsController = SettingsController(SettingsService());
+void main() {
+  runApp(const App());
+}
 
-  // Load the user's preferred theme while the splash screen is displayed.
-  // This prevents a sudden theme change when the app is first displayed.
-  await settingsController.loadSettings();
+class App extends StatelessWidget {
+  const App({super.key});
 
-  // Run the app and pass in the SettingsController. The app listens to the
-  // SettingsController for changes, then passes it further down to the
-  // SettingsView.
-  runApp(App(settingsController: settingsController));
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Five-A-Side',
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+        textTheme: GoogleFonts.outfitTextTheme(),
+      ),
+      home: const HomePage(title: 'FIVE'),
+    );
+  }
 }
